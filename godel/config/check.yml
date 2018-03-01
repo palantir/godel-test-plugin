@@ -1,0 +1,10 @@
+checks:
+  golint:
+    filters:
+      - value: "should have comment or be unexported"
+      - value: "or a comment on this block"
+  novendor:
+    args:
+      # ignore packages added for generation
+      - "--ignore"
+      - "./vendor/github.com/jstemmer/go-junit-report"
