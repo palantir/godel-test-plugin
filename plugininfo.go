@@ -37,16 +37,18 @@ var pluginInfo = pluginapi.MustNewInfo(
 		)),
 		pluginapi.TaskInfoVerifyOptions(
 			pluginapi.NewVerifyOptions(
-				pluginapi.VerifyOptionsTaskFlags(pluginapi.NewVerifyFlag(
-					"junit-output",
-					"Path to JUnit XML output (only used if 'test' task is run)",
-					godellauncher.StringFlag,
-				)),
-				pluginapi.VerifyOptionsTaskFlags(pluginapi.NewVerifyFlag(
-					"tags",
-					"Specify tags that should be used for tests (only used if 'test' task is run)",
-					godellauncher.StringFlag,
-				)),
+				pluginapi.VerifyOptionsTaskFlags(
+					pluginapi.NewVerifyFlag(
+						"junit-output",
+						"Path to JUnit XML output (only used if 'test' task is run)",
+						godellauncher.StringFlag,
+					),
+					pluginapi.NewVerifyFlag(
+						"tags",
+						"Specify tags that should be used for tests (only used if 'test' task is run)",
+						godellauncher.StringFlag,
+					),
+				),
 				pluginapi.VerifyOptionsOrdering(intPtr(verifyorder.Test)),
 			),
 		),
