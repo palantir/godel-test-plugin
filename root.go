@@ -71,4 +71,5 @@ func init() {
 		panic(err)
 	}
 	rootCmd.Flags().StringVar(&junitOutputFlagVal, "junit-output", "", "file to which JUnit output is written")
+	rootCmd.Flags().StringSliceVar(&tagsFlagVal, "tags", nil, "run tests that are part of the provided tags")
 }
