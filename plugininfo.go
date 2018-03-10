@@ -40,12 +40,12 @@ var pluginInfo = pluginapi.MustNewInfo(
 				pluginapi.VerifyOptionsTaskFlags(
 					pluginapi.NewVerifyFlag(
 						"junit-output",
-						"Path to JUnit XML output (only used if 'test' task is run)",
+						"path to JUnit XML output (only used if 'test' task is run)",
 						godellauncher.StringFlag,
 					),
 					pluginapi.NewVerifyFlag(
 						"tags",
-						"Specify tags that should be used for tests (only used if 'test' task is run)",
+						"specify tags that should be used for tests (only used if 'test' task is run)",
 						godellauncher.StringFlag,
 					),
 				),
