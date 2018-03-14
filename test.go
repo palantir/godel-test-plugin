@@ -29,7 +29,7 @@ import (
 	"github.com/pkg/errors"
 )
 
-func runTestCmd(projectDir string, tags []string, junitOutput string, param TestParam, stdout io.Writer) (rErr error) {
+func runTestCmd(projectDir string, testArgs, tags []string, junitOutput string, param TestParam, stdout io.Writer) (rErr error) {
 	if err := param.Validate(); err != nil {
 		return err
 	}
@@ -41,8 +41,10 @@ func runTestCmd(projectDir string, tags []string, junitOutput string, param Test
 		return errors.Errorf("no packages to test")
 	}
 
-	var args []string
-	args = append(args, "test")
+	args := []string{
+		"test",
+	}
+	args = append(args, testArgs...)
 
 	if junitOutput != "" {
 		args = append(args, "-v")

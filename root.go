@@ -39,7 +39,7 @@ var rootCmd = &cobra.Command{
 		if err != nil {
 			return err
 		}
-		return runTestCmd(projectDirFlagVal, tagsFlagVal, junitOutputFlagVal, param, cmd.OutOrStdout())
+		return runTestCmd(projectDirFlagVal, args, tagsFlagVal, junitOutputFlagVal, param, cmd.OutOrStdout())
 	},
 }
 
