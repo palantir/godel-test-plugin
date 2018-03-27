@@ -16,9 +16,9 @@ package cmd
 
 import (
 	"io/ioutil"
-	"path"
+	"os"
 
-	"github.com/palantir/godel/framework/godellauncher"
+	godelconfig "github.com/palantir/godel/framework/godel/config"
 	"github.com/pkg/errors"
 	"github.com/spf13/cobra"
 	"gopkg.in/yaml.v2"
@@ -55,7 +55,7 @@ func testParamFromFlags(testConfigFile, godelConfigFile string) (testplugin.Test
 		testCfg = cfg
 	}
 	if godelConfigFile != "" {
-		cfg, err := godellauncher.ReadGodelConfig(path.Dir(godelConfigFile))
+		cfg, err := godelconfig.ReadGodelConfigFromFile(godelConfigFile)
 		if err != nil {
 			return testplugin.TestParam{}, err
 		}
@@ -66,6 +66,9 @@ func testParamFromFlags(testConfigFile, godelConfigFile string) (testplugin.Test
 
 func readTestConfigFromFile(cfg string) (config.Test, error) {
 	bytes, err := ioutil.ReadFile(cfg)
+	if os.IsNotExist(err) {
+		return config.Test{}, nil
+	}
 	if err != nil {
 		return config.Test{}, errors.Wrapf(err, "failed to read config file")
 	}

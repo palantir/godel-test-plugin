@@ -16,7 +16,7 @@ package cmd
 
 import (
 	"github.com/palantir/godel/framework/godellauncher"
-	"github.com/palantir/godel/framework/pluginapi"
+	"github.com/palantir/godel/framework/pluginapi/v2/pluginapi"
 	"github.com/palantir/godel/framework/verifyorder"
 	"github.com/palantir/pkg/cobracli"
 )
@@ -37,21 +37,19 @@ var PluginInfo = pluginapi.MustNewPluginInfo(
 		"Test packages",
 		pluginapi.TaskInfoCommand("run"),
 		pluginapi.TaskInfoVerifyOptions(
-			pluginapi.NewVerifyOptions(
-				pluginapi.VerifyOptionsTaskFlags(
-					pluginapi.NewVerifyFlag(
-						"junit-output",
-						"path to JUnit XML output (only used if 'test' task is run)",
-						godellauncher.StringFlag,
-					),
-					pluginapi.NewVerifyFlag(
-						"tags",
-						"specify tags that should be used for tests (only used if 'test' task is run)",
-						godellauncher.StringFlag,
-					),
+			pluginapi.VerifyOptionsTaskFlags(
+				pluginapi.NewVerifyFlag(
+					"junit-output",
+					"path to JUnit XML output (only used if 'test' task is run)",
+					godellauncher.StringFlag,
 				),
-				pluginapi.VerifyOptionsOrdering(intPtr(verifyorder.Test)),
+				pluginapi.NewVerifyFlag(
+					"tags",
+					"specify tags that should be used for tests (only used if 'test' task is run)",
+					godellauncher.StringFlag,
+				),
 			),
+			pluginapi.VerifyOptionsOrdering(intPtr(verifyorder.Test)),
 		),
 	),
 	pluginapi.PluginInfoTaskInfo(
@@ -61,6 +59,7 @@ var PluginInfo = pluginapi.MustNewPluginInfo(
 	),
 	pluginapi.PluginInfoUpgradeConfigTaskInfo(
 		pluginapi.UpgradeConfigTaskInfoCommand("upgrade-config"),
+		pluginapi.LegacyConfigFile("test.yml"),
 	),
 )
 
