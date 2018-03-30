@@ -22,16 +22,6 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-const (
-	godelYML = `exclude:
-  names:
-    - "\\..+"
-    - "vendor"
-  paths:
-    - "godel"
-`
-)
-
 func TestUpgradeConfig(t *testing.T) {
 	pluginPath, err := products.Bin("test-plugin")
 	require.NoError(t, err)
@@ -44,9 +34,7 @@ func TestUpgradeConfig(t *testing.T) {
 			{
 				Name: "legacy test config is upgraded",
 				ConfigFiles: map[string]string{
-					"godel/config/godel.yml": godelYML,
-					"godel/config/test-plugin.yml": `
-legacy-config: true
+					"godel/config/test.yml": `
 tags:
   integration:
     names:
@@ -61,6 +49,7 @@ exclude:
     - testdata
 `,
 				},
+				Legacy:     true,
 				WantOutput: "Upgraded configuration for test-plugin.yml\n",
 				WantFiles: map[string]string{
 					"godel/config/test-plugin.yml": `tags:
@@ -82,7 +71,6 @@ exclude:
 			{
 				Name: "current config is unmodified",
 				ConfigFiles: map[string]string{
-					"godel/config/godel.yml": godelYML,
 					"godel/config/test-plugin.yml": `
 tags:
   integration:
