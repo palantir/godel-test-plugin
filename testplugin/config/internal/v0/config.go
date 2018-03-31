@@ -24,10 +24,10 @@ type Config struct {
 	// Tags group tests into different sets. The key is the name of the tag and the value is a
 	// matcher.NamesPathsWithExcludeCfg that specifies the rules for matching the tests that are part of the tag.
 	// Any test that matches the provided matcher is considered part of the tag.
-	Tags map[string]matcher.NamesPathsWithExcludeCfg `yaml:"tags" json:"tags"`
+	Tags map[string]matcher.NamesPathsWithExcludeCfg `yaml:"tags,omitempty"`
 
 	// Exclude specifies the files that should be excluded from tests.
-	Exclude matcher.NamesPathsCfg `yaml:"exclude" json:"exclude"`
+	Exclude matcher.NamesPathsCfg `yaml:"exclude,omitempty"`
 }
 
 func UpgradeConfig(cfgBytes []byte) ([]byte, error) {

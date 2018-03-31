@@ -58,13 +58,9 @@ exclude:
     - ^integration$
     paths:
     - notification
-    exclude:
-      names: []
-      paths: []
 exclude:
   names:
   - testdata
-  paths: []
 `,
 				},
 			},
