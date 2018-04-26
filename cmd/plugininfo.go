@@ -18,49 +18,51 @@ import (
 	"github.com/palantir/godel/framework/godellauncher"
 	"github.com/palantir/godel/framework/pluginapi/v2/pluginapi"
 	"github.com/palantir/godel/framework/verifyorder"
-	"github.com/palantir/pkg/cobracli"
 )
 
-var PluginInfo = pluginapi.MustNewPluginInfo(
-	"com.palantir.godel-test-plugin",
-	"test-plugin",
-	cobracli.Version,
-	pluginapi.PluginInfoUsesConfigFile(),
-	pluginapi.PluginInfoGlobalFlagOptions(
-		pluginapi.GlobalFlagOptionsParamDebugFlag("--"+pluginapi.DebugFlagName),
-		pluginapi.GlobalFlagOptionsParamProjectDirFlag("--"+pluginapi.ProjectDirFlagName),
-		pluginapi.GlobalFlagOptionsParamGodelConfigFlag("--"+pluginapi.GodelConfigFlagName),
-		pluginapi.GlobalFlagOptionsParamConfigFlag("--"+pluginapi.ConfigFlagName),
-	),
-	pluginapi.PluginInfoTaskInfo(
-		"test",
-		"Test packages",
-		pluginapi.TaskInfoCommand("run"),
-		pluginapi.TaskInfoVerifyOptions(
-			pluginapi.VerifyOptionsTaskFlags(
-				pluginapi.NewVerifyFlag(
-					"junit-output",
-					"path to JUnit XML output (only used if 'test' task is run)",
-					godellauncher.StringFlag,
-				),
-				pluginapi.NewVerifyFlag(
-					"tags",
-					"specify tags that should be used for tests (only used if 'test' task is run)",
-					godellauncher.StringFlag,
-				),
-			),
-			pluginapi.VerifyOptionsOrdering(intPtr(verifyorder.Test)),
+var (
+	Version    = "unspecified"
+	PluginInfo = pluginapi.MustNewPluginInfo(
+		"com.palantir.godel-test-plugin",
+		"test-plugin",
+		Version,
+		pluginapi.PluginInfoUsesConfigFile(),
+		pluginapi.PluginInfoGlobalFlagOptions(
+			pluginapi.GlobalFlagOptionsParamDebugFlag("--"+pluginapi.DebugFlagName),
+			pluginapi.GlobalFlagOptionsParamProjectDirFlag("--"+pluginapi.ProjectDirFlagName),
+			pluginapi.GlobalFlagOptionsParamGodelConfigFlag("--"+pluginapi.GodelConfigFlagName),
+			pluginapi.GlobalFlagOptionsParamConfigFlag("--"+pluginapi.ConfigFlagName),
 		),
-	),
-	pluginapi.PluginInfoTaskInfo(
-		"test-tags",
-		"Print the test packages that match the provided test tags",
-		pluginapi.TaskInfoCommand("tags"),
-	),
-	pluginapi.PluginInfoUpgradeConfigTaskInfo(
-		pluginapi.UpgradeConfigTaskInfoCommand("upgrade-config"),
-		pluginapi.LegacyConfigFile("test.yml"),
-	),
+		pluginapi.PluginInfoTaskInfo(
+			"test",
+			"Test packages",
+			pluginapi.TaskInfoCommand("run"),
+			pluginapi.TaskInfoVerifyOptions(
+				pluginapi.VerifyOptionsTaskFlags(
+					pluginapi.NewVerifyFlag(
+						"junit-output",
+						"path to JUnit XML output (only used if 'test' task is run)",
+						godellauncher.StringFlag,
+					),
+					pluginapi.NewVerifyFlag(
+						"tags",
+						"specify tags that should be used for tests (only used if 'test' task is run)",
+						godellauncher.StringFlag,
+					),
+				),
+				pluginapi.VerifyOptionsOrdering(intPtr(verifyorder.Test)),
+			),
+		),
+		pluginapi.PluginInfoTaskInfo(
+			"test-tags",
+			"Print the test packages that match the provided test tags",
+			pluginapi.TaskInfoCommand("tags"),
+		),
+		pluginapi.PluginInfoUpgradeConfigTaskInfo(
+			pluginapi.UpgradeConfigTaskInfoCommand("upgrade-config"),
+			pluginapi.LegacyConfigFile("test.yml"),
+		),
+	)
 )
 
 func intPtr(val int) *int {
