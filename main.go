@@ -34,5 +34,5 @@ func main() {
 		amalgomated.Instance().Run(testplugin.GoJUnitReport)
 		return
 	}
-	os.Exit(cobracli.ExecuteWithDefaultParamsWithVersion(cmd.RootCmd, &cmd.DebugFlagVal, ""))
+	os.Exit(cobracli.ExecuteWithDebugVarAndDefaultParams(cmd.RootCmd, &cmd.DebugFlagVal))
 }
