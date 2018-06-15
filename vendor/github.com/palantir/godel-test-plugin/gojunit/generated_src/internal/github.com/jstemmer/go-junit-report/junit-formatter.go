@@ -13,30 +13,30 @@ import (
 
 // JUnitTestSuites is a collection of JUnit test suites.
 type JUnitTestSuites struct {
-	XMLName xml.Name `xml:"testsuites"`
-	Suites  []JUnitTestSuite
+	XMLName	xml.Name	`xml:"testsuites"`
+	Suites	[]JUnitTestSuite
 }
 
 // JUnitTestSuite is a single JUnit test suite which may contain many
 // testcases.
 type JUnitTestSuite struct {
-	XMLName    xml.Name        `xml:"testsuite"`
-	Tests      int             `xml:"tests,attr"`
-	Failures   int             `xml:"failures,attr"`
-	Time       string          `xml:"time,attr"`
-	Name       string          `xml:"name,attr"`
-	Properties []JUnitProperty `xml:"properties>property,omitempty"`
-	TestCases  []JUnitTestCase
+	XMLName		xml.Name	`xml:"testsuite"`
+	Tests		int		`xml:"tests,attr"`
+	Failures	int		`xml:"failures,attr"`
+	Time		string		`xml:"time,attr"`
+	Name		string		`xml:"name,attr"`
+	Properties	[]JUnitProperty	`xml:"properties>property,omitempty"`
+	TestCases	[]JUnitTestCase
 }
 
 // JUnitTestCase is a single test case with its result.
 type JUnitTestCase struct {
-	XMLName     xml.Name          `xml:"testcase"`
-	Classname   string            `xml:"classname,attr"`
-	Name        string            `xml:"name,attr"`
-	Time        string            `xml:"time,attr"`
-	SkipMessage *JUnitSkipMessage `xml:"skipped,omitempty"`
-	Failure     *JUnitFailure     `xml:"failure,omitempty"`
+	XMLName		xml.Name		`xml:"testcase"`
+	Classname	string			`xml:"classname,attr"`
+	Name		string			`xml:"name,attr"`
+	Time		string			`xml:"time,attr"`
+	SkipMessage	*JUnitSkipMessage	`xml:"skipped,omitempty"`
+	Failure		*JUnitFailure		`xml:"failure,omitempty"`
 }
 
 // JUnitSkipMessage contains the reason why a testcase was skipped.
@@ -46,15 +46,15 @@ type JUnitSkipMessage struct {
 
 // JUnitProperty represents a key/value pair used to define properties.
 type JUnitProperty struct {
-	Name  string `xml:"name,attr"`
-	Value string `xml:"value,attr"`
+	Name	string	`xml:"name,attr"`
+	Value	string	`xml:"value,attr"`
 }
 
 // JUnitFailure contains data related to a failed test.
 type JUnitFailure struct {
-	Message  string `xml:"message,attr"`
-	Type     string `xml:"type,attr"`
-	Contents string `xml:",chardata"`
+	Message		string	`xml:"message,attr"`
+	Type		string	`xml:"type,attr"`
+	Contents	string	`xml:",chardata"`
 }
 
 // JUnitReportXML writes a JUnit xml representation of the given report to w
@@ -65,12 +65,12 @@ func JUnitReportXML(report *parser.Report, noXMLHeader bool, goVersion string, w
 	// convert Report to JUnit test suites
 	for _, pkg := range report.Packages {
 		ts := JUnitTestSuite{
-			Tests:      len(pkg.Tests),
-			Failures:   0,
-			Time:       formatTime(pkg.Time),
-			Name:       pkg.Name,
-			Properties: []JUnitProperty{},
-			TestCases:  []JUnitTestCase{},
+			Tests:		len(pkg.Tests),
+			Failures:	0,
+			Time:		formatTime(pkg.Time),
+			Name:		pkg.Name,
+			Properties:	[]JUnitProperty{},
+			TestCases:	[]JUnitTestCase{},
 		}
 
 		classname := pkg.Name
@@ -91,18 +91,18 @@ func JUnitReportXML(report *parser.Report, noXMLHeader bool, goVersion string, w
 		// individual test cases
 		for _, test := range pkg.Tests {
 			testCase := JUnitTestCase{
-				Classname: classname,
-				Name:      test.Name,
-				Time:      formatTime(test.Time),
-				Failure:   nil,
+				Classname:	classname,
+				Name:		test.Name,
+				Time:		formatTime(test.Time),
+				Failure:	nil,
 			}
 
 			if test.Result == parser.FAIL {
 				ts.Failures++
 				testCase.Failure = &JUnitFailure{
-					Message:  "Failed",
-					Type:     "",
-					Contents: strings.Join(test.Output, "\n"),
+					Message:	"Failed",
+					Type:		"",
+					Contents:	strings.Join(test.Output, "\n"),
 				}
 			}
 

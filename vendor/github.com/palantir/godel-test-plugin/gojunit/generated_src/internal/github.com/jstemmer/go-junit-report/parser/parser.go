@@ -13,7 +13,7 @@ type Result int
 
 // Test result constants
 const (
-	PASS Result = iota
+	PASS	Result	= iota
 	FAIL
 	SKIP
 )
@@ -25,26 +25,26 @@ type Report struct {
 
 // Package contains the test results of a single package.
 type Package struct {
-	Name        string
-	Time        int
-	Tests       []*Test
-	CoveragePct string
+	Name		string
+	Time		int
+	Tests		[]*Test
+	CoveragePct	string
 }
 
 // Test contains the results of a single test.
 type Test struct {
-	Name   string
-	Time   int
-	Result Result
-	Output []string
+	Name	string
+	Time	int
+	Result	Result
+	Output	[]string
 }
 
 var (
-	regexStatus   = regexp.MustCompile(`--- (PASS|FAIL|SKIP): (.+) \((\d+\.\d+)(?: seconds|s)\)`)
-	regexCoverage = regexp.MustCompile(`^coverage:\s+(\d+\.\d+)%\s+of\s+statements(?:\sin\s.+)?$`)
-	regexResult   = regexp.MustCompile(`^(ok|FAIL)\s+([^ ]+)\s+(?:(\d+\.\d+)s|(\[\w+ failed]))(?:\s+coverage:\s+(\d+\.\d+)%\sof\sstatements(?:\sin\s.+)?)?$`)
-	regexOutput   = regexp.MustCompile(`(    )*\t(.*)`)
-	regexSummary  = regexp.MustCompile(`^(PASS|FAIL|SKIP)$`)
+	regexStatus	= regexp.MustCompile(`--- (PASS|FAIL|SKIP): (.+) \((\d+\.\d+)(?: seconds|s)\)`)
+	regexCoverage	= regexp.MustCompile(`^coverage:\s+(\d+\.\d+)%\s+of\s+statements(?:\sin\s.+)?$`)
+	regexResult	= regexp.MustCompile(`^(ok|FAIL)\s+([^ ]+)\s+(?:(\d+\.\d+)s|(\[\w+ failed]))(?:\s+coverage:\s+(\d+\.\d+)%\sof\sstatements(?:\sin\s.+)?)?$`)
+	regexOutput	= regexp.MustCompile(`(    )*\t(.*)`)
+	regexSummary	= regexp.MustCompile(`^(PASS|FAIL|SKIP)$`)
 )
 
 // Parse parses go test output from reader r and returns a report with the
@@ -94,9 +94,9 @@ func Parse(r io.Reader, pkgName string) (*Report, error) {
 			// new test
 			cur = strings.TrimSpace(line[8:])
 			tests = append(tests, &Test{
-				Name:   cur,
-				Result: FAIL,
-				Output: make([]string, 0),
+				Name:	cur,
+				Result:	FAIL,
+				Output:	make([]string, 0),
 			})
 
 			// clear the current build package, so output lines won't be added to that build
@@ -110,27 +110,27 @@ func Parse(r io.Reader, pkgName string) (*Report, error) {
 				// the build of the package failed, inject a dummy test into the package
 				// which indicate about the failure and contain the failure description.
 				tests = append(tests, &Test{
-					Name:   matches[4],
-					Result: FAIL,
-					Output: packageCaptures[matches[2]],
+					Name:	matches[4],
+					Result:	FAIL,
+					Output:	packageCaptures[matches[2]],
 				})
 			} else if matches[1] == "FAIL" && len(tests) == 0 && len(buffer) > 0 {
 				// This package didn't have any tests, but it failed with some
 				// output. Create a dummy test with the output.
 				tests = append(tests, &Test{
-					Name:   "Failure",
-					Result: FAIL,
-					Output: buffer,
+					Name:	"Failure",
+					Result:	FAIL,
+					Output:	buffer,
 				})
 				buffer = buffer[0:0]
 			}
 
 			// all tests in this package are finished
 			report.Packages = append(report.Packages, Package{
-				Name:        matches[2],
-				Time:        parseTime(matches[3]),
-				Tests:       tests,
-				CoveragePct: coveragePct,
+				Name:		matches[2],
+				Time:		parseTime(matches[3]),
+				Tests:		tests,
+				CoveragePct:	coveragePct,
 			})
 
 			buffer = buffer[0:0]
@@ -188,10 +188,10 @@ func Parse(r io.Reader, pkgName string) (*Report, error) {
 	if len(tests) > 0 {
 		// no result line found
 		report.Packages = append(report.Packages, Package{
-			Name:        pkgName,
-			Time:        testsTime,
-			Tests:       tests,
-			CoveragePct: coveragePct,
+			Name:		pkgName,
+			Time:		testsTime,
+			Tests:		tests,
+			CoveragePct:	coveragePct,
 		})
 	}
 

@@ -1,0 +1,5 @@
+amalgomators:
+  gojunit:
+    config: gojunit.yml
+    output-dir: gojunit/generated_src
+    pkg: amalgomated
