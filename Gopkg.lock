@@ -16,7 +16,7 @@
     "bzip2/internal/sais",
     "internal",
     "internal/errors",
-    "internal/prefix"
+    "internal/prefix",
   ]
   revision = "cc9eb1d7ad760af14e8f918698f745e80377af4f"
 
@@ -43,7 +43,7 @@
   name = "github.com/jstemmer/go-junit-report"
   packages = [
     ".",
-    "parser"
+    "parser",
   ]
   revision = "d9db44172dfb1d1ba6d68749e38ea73f64525e93"
 
@@ -70,7 +70,7 @@
   name = "github.com/nmiyake/pkg"
   packages = [
     "dirs",
-    "errorstringer"
+    "errorstringer",
   ]
   revision = "b64318170fdef93b4462420e0badef8050dbb7ec"
 
@@ -107,8 +107,8 @@
     "framework/verifyorder",
     "godelgetter",
     "pkg/osarch",
-    "pkg/products",
-    "pkg/versionedconfig"
+    "pkg/products/v2/products",
+    "pkg/versionedconfig",
   ]
   revision = "6ef6fc2811e260af0641aae25a45881217b3cf3d"
 
@@ -119,7 +119,7 @@
     "cobracli",
     "matcher",
     "pkgpath",
-    "specdir"
+    "specdir",
   ]
   revision = "23395ebeee5df1083443a6261e5f674a76af91b6"
 
@@ -151,7 +151,7 @@
   name = "github.com/stretchr/testify"
   packages = [
     "assert",
-    "require"
+    "require",
   ]
   revision = "12b6f73e6084dad08a7c6e575284b177ecafbc71"
   version = "v1.2.1"
@@ -168,7 +168,7 @@
     ".",
     "internal/hash",
     "internal/xlog",
-    "lzma"
+    "lzma",
   ]
   revision = "0c6b41e72360850ca4f98dc341fd999726ea007f"
   version = "v0.5.4"
@@ -194,6 +194,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "014d35dcb944993f2da85eb1fe8fba3ec5f6173c58af64a2fee580e67ce3be10"
+  inputs-digest = "5bc3539e91f8da024fd23abe3197df72e9c751ff6efc156dc7c9ffd4f46953ea"
   solver-name = "gps-cdcl"
   solver-version = 1
