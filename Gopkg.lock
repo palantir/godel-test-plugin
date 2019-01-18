@@ -137,6 +137,24 @@
   version = "v2.11.0"
 
 [[projects]]
+  digest = "1:e36d4804f0ab1c9b3e56da80c2f481f2103b839a9c88d7e85922439b72ceea0d"
+  name = "github.com/palantir/godel-test-plugin"
+  packages = [
+    "cmd",
+    "gojunit/generated_src",
+    "gojunit/generated_src/internal/github.com/jstemmer/go-junit-report",
+    "gojunit/generated_src/internal/github.com/jstemmer/go-junit-report/amalgomated_flag",
+    "gojunit/generated_src/internal/github.com/jstemmer/go-junit-report/parser",
+    "testplugin",
+    "testplugin/config",
+    "testplugin/config/internal/legacy",
+    "testplugin/config/internal/v0",
+  ]
+  pruneopts = "UT"
+  revision = "b372e5e35d8d9c4b06f1c18eb8706b0422587e90"
+  version = "v1.1.0"
+
+[[projects]]
   digest = "1:3daca7f2d75df7e74dce40464a5cea6e14989be34b4364cdbc38c12ea2e5d34c"
   name = "github.com/palantir/pkg"
   packages = [
@@ -243,6 +261,15 @@
   input-imports = [
     "github.com/jstemmer/go-junit-report",
     "github.com/kardianos/osext",
+    "github.com/palantir/godel-test-plugin/cmd",
+    "github.com/palantir/godel-test-plugin/gojunit/generated_src",
+    "github.com/palantir/godel-test-plugin/gojunit/generated_src/internal/github.com/jstemmer/go-junit-report",
+    "github.com/palantir/godel-test-plugin/gojunit/generated_src/internal/github.com/jstemmer/go-junit-report/amalgomated_flag",
+    "github.com/palantir/godel-test-plugin/gojunit/generated_src/internal/github.com/jstemmer/go-junit-report/parser",
+    "github.com/palantir/godel-test-plugin/testplugin",
+    "github.com/palantir/godel-test-plugin/testplugin/config",
+    "github.com/palantir/godel-test-plugin/testplugin/config/internal/legacy",
+    "github.com/palantir/godel-test-plugin/testplugin/config/internal/v0",
     "github.com/palantir/godel/framework/godel/config",
     "github.com/palantir/godel/framework/godellauncher",
     "github.com/palantir/godel/framework/pluginapi",
