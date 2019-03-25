@@ -55,11 +55,11 @@ func testParamFromFlags(testConfigFile, godelConfigFile string) (testplugin.Test
 		testCfg = cfg
 	}
 	if godelConfigFile != "" {
-		cfg, err := godelconfig.ReadGodelConfigFromFile(godelConfigFile)
+		excludes, err := godelconfig.ReadGodelConfigExcludesFromFile(godelConfigFile)
 		if err != nil {
 			return testplugin.TestParam{}, err
 		}
-		testCfg.Exclude.Add(cfg.Exclude)
+		testCfg.Exclude.Add(excludes)
 	}
 	return testCfg.ToParam(), nil
 }
