@@ -18,7 +18,7 @@ import (
 	"github.com/palantir/pkg/matcher"
 
 	"github.com/palantir/godel-test-plugin/testplugin"
-	"github.com/palantir/godel-test-plugin/testplugin/config/internal/v0"
+	v0 "github.com/palantir/godel-test-plugin/testplugin/config/internal/v0"
 )
 
 type Test v0.Config
