@@ -50,14 +50,15 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:6524c12daf66fe5ff14ab8bfa9f0cf1ca7953336651c2b61a70a56aafcc99564"
+  digest = "1:89e34854f4513cb0c53ada9ba52e680b8b74a370b33b3a26800a4cdbc9f00ced"
   name = "github.com/jstemmer/go-junit-report"
   packages = [
     ".",
+    "formatter",
     "parser",
   ]
   pruneopts = "UT"
-  revision = "d9db44172dfb1d1ba6d68749e38ea73f64525e93"
+  revision = "af01ea7f8024089b458d804d5cdf190f962a9a0c"
 
 [[projects]]
   branch = "master"
