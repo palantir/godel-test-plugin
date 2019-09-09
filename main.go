@@ -21,7 +21,7 @@ import (
 	"github.com/palantir/pkg/cobracli"
 
 	"github.com/palantir/godel-test-plugin/cmd"
-	"github.com/palantir/godel-test-plugin/gojunit/generated_src"
+	amalgomated "github.com/palantir/godel-test-plugin/gojunit/generated_src"
 	"github.com/palantir/godel-test-plugin/testplugin"
 )
 
