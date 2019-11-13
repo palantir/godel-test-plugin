@@ -17,8 +17,6 @@ github.com/inconshreveable/mousetrap
 github.com/jstemmer/go-junit-report
 github.com/jstemmer/go-junit-report/formatter
 github.com/jstemmer/go-junit-report/parser
-# github.com/kardianos/osext v0.0.0-20170510131534-ae77be60afb1
-github.com/kardianos/osext
 # github.com/mattn/go-runewidth v0.0.2
 github.com/mattn/go-runewidth
 # github.com/mholt/archiver v2.0.0+incompatible
