@@ -18,7 +18,7 @@ import (
 	"io/ioutil"
 	"os"
 
-	godelconfig "github.com/palantir/godel/framework/godel/config"
+	godelconfig "github.com/palantir/godel/v2/framework/godel/config"
 	"github.com/pkg/errors"
 	"github.com/spf13/cobra"
 	"gopkg.in/yaml.v2"

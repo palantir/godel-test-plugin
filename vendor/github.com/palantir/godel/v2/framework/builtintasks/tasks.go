@@ -12,16 +12,25 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package cmd
+package builtintasks
 
 import (
-	"github.com/palantir/godel/v2/framework/pluginapi"
-
-	"github.com/palantir/godel-test-plugin/testplugin/config"
+	"github.com/palantir/godel/v2/framework/godel/config"
+	"github.com/palantir/godel/v2/framework/godellauncher"
 )
 
-var upgradeConfigCmd = pluginapi.CobraUpgradeConfigCmd(config.UpgradeConfig)
-
-func init() {
-	RootCmd.AddCommand(upgradeConfigCmd)
+func Tasks(tasksCfgInfo config.TasksConfigInfo) []godellauncher.Task {
+	return []godellauncher.Task{
+		VersionTask(),
+		InstallTask(),
+		UpdateTask(),
+		InfoTask(),
+		ExecTask(),
+		CheckPathTask(),
+		GitHooksTask(),
+		GitHubWikiTask(),
+		IDEATask(),
+		PackagesTask(),
+		TasksConfigTask(tasksCfgInfo),
+	}
 }
