@@ -13,15 +13,15 @@ github.com/google/go-github/github
 github.com/google/go-querystring/query
 # github.com/inconshreveable/mousetrap v1.0.0
 github.com/inconshreveable/mousetrap
-# github.com/jstemmer/go-junit-report v0.0.0-20190106144839-af01ea7f8024
+# github.com/jstemmer/go-junit-report v0.9.1
 github.com/jstemmer/go-junit-report
 github.com/jstemmer/go-junit-report/formatter
 github.com/jstemmer/go-junit-report/parser
-# github.com/mattn/go-runewidth v0.0.2
+# github.com/mattn/go-runewidth v0.0.6
 github.com/mattn/go-runewidth
 # github.com/mholt/archiver v2.0.0+incompatible
 github.com/mholt/archiver
-# github.com/nmiyake/pkg v0.0.0-20170627000939-b64318170fde
+# github.com/nmiyake/pkg v0.0.0-20181213185804-ae0375219445
 github.com/nmiyake/pkg/dirs
 github.com/nmiyake/pkg/errorstringer
 # github.com/nwaples/rardecode v0.0.0-20171029023500-e06696f847ae
