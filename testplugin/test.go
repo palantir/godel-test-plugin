@@ -23,7 +23,6 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/kardianos/osext"
 	"github.com/palantir/pkg/matcher"
 	"github.com/palantir/pkg/pkgpath"
 	"github.com/pkg/errors"
@@ -65,7 +64,7 @@ func RunTestCmd(projectDir string, testArgs, tags []string, junitOutput string, 
 	done := make(chan error)
 
 	if junitOutput != "" {
-		pathToSelf, err := osext.Executable()
+		pathToSelf, err := os.Executable()
 		if err != nil {
 			return errors.Wrapf(err, "failed to determine path for current executable")
 		}
