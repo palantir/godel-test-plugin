@@ -1,12 +1,12 @@
 package amalgomated
 
 import (
-	"github.com/palantir/godel-test-plugin/gojunit/generated_src/internal/github.com/jstemmer/go-junit-report/amalgomated_flag"
+	"amalgomated_flag"
 	"fmt"
 	"os"
 
-	"github.com/palantir/godel-test-plugin/gojunit/generated_src/internal/github.com/jstemmer/go-junit-report/formatter"
-	"github.com/palantir/godel-test-plugin/gojunit/generated_src/internal/github.com/jstemmer/go-junit-report/parser"
+	"./formatter"
+	"./parser"
 )
 
 var (

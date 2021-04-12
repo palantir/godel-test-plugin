@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"sort"
 
-	gojunitreport "github.com/palantir/godel-test-plugin/gojunit/generated_src/internal/github.com/jstemmer/go-junit-report"
+	gojunitreport "."
 )
 
 var programs = map[string]func(){"gojunitreport": func() {

@@ -9,7 +9,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/palantir/godel-test-plugin/gojunit/generated_src/internal/github.com/jstemmer/go-junit-report/parser"
+	"./parser"
 )
 
 // JUnitTestSuites is a collection of JUnit test suites.
