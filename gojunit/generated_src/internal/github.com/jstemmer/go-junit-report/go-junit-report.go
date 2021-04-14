@@ -1,7 +1,7 @@
 package amalgomated
 
 import (
-	"github.com/palantir/godel-test-plugin/gojunit/generated_src/internal/github.com/jstemmer/go-junit-report/amalgomated_flag"
+	"github.com/palantir/godel-test-plugin/gojunit/generated_src/internal/amalgomated_flag"
 	"fmt"
 	"os"
 
