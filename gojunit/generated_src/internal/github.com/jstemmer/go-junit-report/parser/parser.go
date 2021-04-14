@@ -14,7 +14,7 @@ type Result int
 
 // Test result constants
 const (
-	PASS	Result	= iota
+	PASS Result = iota
 	FAIL
 	SKIP
 )
@@ -26,49 +26,49 @@ type Report struct {
 
 // Package contains the test results of a single package.
 type Package struct {
-	Name		string
-	Duration	time.Duration
-	Tests		[]*Test
-	Benchmarks	[]*Benchmark
-	CoveragePct	string
+	Name        string
+	Duration    time.Duration
+	Tests       []*Test
+	Benchmarks  []*Benchmark
+	CoveragePct string
 
 	// Time is deprecated, use Duration instead.
-	Time	int	// in milliseconds
+	Time int // in milliseconds
 }
 
 // Test contains the results of a single test.
 type Test struct {
-	Name		string
-	Duration	time.Duration
-	Result		Result
-	Output		[]string
+	Name     string
+	Duration time.Duration
+	Result   Result
+	Output   []string
 
-	SubtestIndent	string
+	SubtestIndent string
 
 	// Time is deprecated, use Duration instead.
-	Time	int	// in milliseconds
+	Time int // in milliseconds
 }
 
 // Benchmark contains the results of a single benchmark.
 type Benchmark struct {
-	Name		string
-	Duration	time.Duration
+	Name     string
+	Duration time.Duration
 	// number of B/op
-	Bytes	int
+	Bytes int
 	// number of allocs/op
-	Allocs	int
+	Allocs int
 }
 
 var (
-	regexStatus	= regexp.MustCompile(`--- (PASS|FAIL|SKIP): (.+) \((\d+\.\d+)(?: seconds|s)\)`)
-	regexIndent	= regexp.MustCompile(`^([ \t]+)---`)
-	regexCoverage	= regexp.MustCompile(`^coverage:\s+(\d+\.\d+)%\s+of\s+statements(?:\sin\s.+)?$`)
-	regexResult	= regexp.MustCompile(`^(ok|FAIL)\s+([^ ]+)\s+(?:(\d+\.\d+)s|\(cached\)|(\[\w+ failed]))(?:\s+coverage:\s+(\d+\.\d+)%\sof\sstatements(?:\sin\s.+)?)?$`)
+	regexStatus   = regexp.MustCompile(`--- (PASS|FAIL|SKIP): (.+) \((\d+\.\d+)(?: seconds|s)\)`)
+	regexIndent   = regexp.MustCompile(`^([ \t]+)---`)
+	regexCoverage = regexp.MustCompile(`^coverage:\s+(\d+\.\d+)%\s+of\s+statements(?:\sin\s.+)?$`)
+	regexResult   = regexp.MustCompile(`^(ok|FAIL)\s+([^ ]+)\s+(?:(\d+\.\d+)s|\(cached\)|(\[\w+ failed]))(?:\s+coverage:\s+(\d+\.\d+)%\sof\sstatements(?:\sin\s.+)?)?$`)
 	// regexBenchmark captures 3-5 groups: benchmark name, number of times ran, ns/op (with or without decimal), B/op (optional), and allocs/op (optional).
-	regexBenchmark		= regexp.MustCompile(`^(Benchmark[^ -]+)(?:-\d+\s+|\s+)(\d+)\s+(\d+|\d+\.\d+)\sns/op(?:\s+(\d+)\sB/op)?(?:\s+(\d+)\sallocs/op)?`)
-	regexOutput		= regexp.MustCompile(`(    )*\t(.*)`)
-	regexSummary		= regexp.MustCompile(`^(PASS|FAIL|SKIP)$`)
-	regexPackageWithTest	= regexp.MustCompile(`^# ([^\[\]]+) \[[^\]]+\]$`)
+	regexBenchmark       = regexp.MustCompile(`^(Benchmark[^ -]+)(?:-\d+\s+|\s+)(\d+)\s+(\d+|\d+\.\d+)\sns/op(?:\s+(\d+)\sB/op)?(?:\s+(\d+)\sallocs/op)?`)
+	regexOutput          = regexp.MustCompile(`(    )*\t(.*)`)
+	regexSummary         = regexp.MustCompile(`^(PASS|FAIL|SKIP)$`)
+	regexPackageWithTest = regexp.MustCompile(`^# ([^\[\]]+) \[[^\]]+\]$`)
 )
 
 // Parse parses go test output from reader r and returns a report with the
@@ -118,9 +118,9 @@ func Parse(r io.Reader, pkgName string) (*Report, error) {
 			// new test
 			cur = strings.TrimSpace(line[8:])
 			tests = append(tests, &Test{
-				Name:	cur,
-				Result:	FAIL,
-				Output:	make([]string, 0),
+				Name:   cur,
+				Result: FAIL,
+				Output: make([]string, 0),
 			})
 
 			// clear the current build package, so output lines won't be added to that build
@@ -130,10 +130,10 @@ func Parse(r io.Reader, pkgName string) (*Report, error) {
 			allocs, _ := strconv.Atoi(matches[5])
 
 			benchmarks = append(benchmarks, &Benchmark{
-				Name:		matches[1],
-				Duration:	parseNanoseconds(matches[3]),
-				Bytes:		bytes,
-				Allocs:		allocs,
+				Name:     matches[1],
+				Duration: parseNanoseconds(matches[3]),
+				Bytes:    bytes,
+				Allocs:   allocs,
 			})
 		} else if strings.HasPrefix(line, "=== PAUSE ") {
 			continue
@@ -148,31 +148,31 @@ func Parse(r io.Reader, pkgName string) (*Report, error) {
 				// the build of the package failed, inject a dummy test into the package
 				// which indicate about the failure and contain the failure description.
 				tests = append(tests, &Test{
-					Name:	matches[4],
-					Result:	FAIL,
-					Output:	packageCaptures[matches[2]],
+					Name:   matches[4],
+					Result: FAIL,
+					Output: packageCaptures[matches[2]],
 				})
 			} else if matches[1] == "FAIL" && !containsFailures(tests) && len(buffers[cur]) > 0 {
 				// This package didn't have any failing tests, but still it
 				// failed with some output. Create a dummy test with the
 				// output.
 				tests = append(tests, &Test{
-					Name:	"Failure",
-					Result:	FAIL,
-					Output:	buffers[cur],
+					Name:   "Failure",
+					Result: FAIL,
+					Output: buffers[cur],
 				})
 				buffers[cur] = buffers[cur][0:0]
 			}
 
 			// all tests in this package are finished
 			report.Packages = append(report.Packages, Package{
-				Name:		matches[2],
-				Duration:	parseSeconds(matches[3]),
-				Tests:		tests,
-				Benchmarks:	benchmarks,
-				CoveragePct:	coveragePct,
+				Name:        matches[2],
+				Duration:    parseSeconds(matches[3]),
+				Tests:       tests,
+				Benchmarks:  benchmarks,
+				CoveragePct: coveragePct,
 
-				Time:	int(parseSeconds(matches[3]) / time.Millisecond),	// deprecated
+				Time: int(parseSeconds(matches[3]) / time.Millisecond), // deprecated
 			})
 
 			buffers[cur] = buffers[cur][0:0]
@@ -207,7 +207,7 @@ func Parse(r io.Reader, pkgName string) (*Report, error) {
 			test.Duration = parseSeconds(matches[3])
 			testsTime += test.Duration
 
-			test.Time = int(test.Duration / time.Millisecond)	// deprecated
+			test.Time = int(test.Duration / time.Millisecond) // deprecated
 		} else if matches := regexCoverage.FindStringSubmatch(line); len(matches) == 2 {
 			coveragePct = matches[1]
 		} else if matches := regexOutput.FindStringSubmatch(line); capturedPackage == "" && len(matches) == 3 {
@@ -254,12 +254,12 @@ func Parse(r io.Reader, pkgName string) (*Report, error) {
 	if len(tests) > 0 {
 		// no result line found
 		report.Packages = append(report.Packages, Package{
-			Name:		pkgName,
-			Duration:	testsTime,
-			Time:		int(testsTime / time.Millisecond),
-			Tests:		tests,
-			Benchmarks:	benchmarks,
-			CoveragePct:	coveragePct,
+			Name:        pkgName,
+			Duration:    testsTime,
+			Time:        int(testsTime / time.Millisecond),
+			Tests:       tests,
+			Benchmarks:  benchmarks,
+			CoveragePct: coveragePct,
 		})
 	}
 
