@@ -17,9 +17,8 @@ package cmd
 import (
 	"strings"
 
-	"github.com/spf13/cobra"
-
 	"github.com/palantir/godel-test-plugin/testplugin"
+	"github.com/spf13/cobra"
 )
 
 var tagPkgsCmd = &cobra.Command{

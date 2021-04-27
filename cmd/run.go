@@ -18,13 +18,12 @@ import (
 	"io/ioutil"
 	"os"
 
+	"github.com/palantir/godel-test-plugin/testplugin"
+	"github.com/palantir/godel-test-plugin/testplugin/config"
 	godelconfig "github.com/palantir/godel/v2/framework/godel/config"
 	"github.com/pkg/errors"
 	"github.com/spf13/cobra"
 	"gopkg.in/yaml.v2"
-
-	"github.com/palantir/godel-test-plugin/testplugin"
-	"github.com/palantir/godel-test-plugin/testplugin/config"
 )
 
 var runCmd = &cobra.Command{
