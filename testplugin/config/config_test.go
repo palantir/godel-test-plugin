@@ -18,12 +18,11 @@ import (
 	"fmt"
 	"testing"
 
+	"github.com/palantir/godel-test-plugin/testplugin/config"
 	"github.com/palantir/pkg/matcher"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 	"gopkg.in/yaml.v2"
-
-	"github.com/palantir/godel-test-plugin/testplugin/config"
 )
 
 func TestLoadConfig(t *testing.T) {
