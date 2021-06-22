@@ -1,0 +1,5 @@
+type: fix
+fix:
+  description: Ensure junit reporter is allowed to complete
+  links:
+  - https://github.com/palantir/godel-test-plugin/pull/94
