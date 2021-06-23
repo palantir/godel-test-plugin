@@ -2,6 +2,6 @@ type: fix
 fix:
   description: >
     Fixes race condition where plugin could exit before JUnit reporter completed.
-    Prior to this fix, running the test plugin with the --junit flag would sometimes not produce the JUnit test report if a test failed.
+    Prior to this fix, running the test plugin with the --junit-output flag would sometimes not produce the JUnit test report if a test failed.
   links:
   - https://github.com/palantir/godel-test-plugin/pull/94
