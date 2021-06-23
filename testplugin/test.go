@@ -109,8 +109,8 @@ func RunTestCmd(projectDir string, testArgs, tags []string, junitOutput string, 
 
 	defer func() {
 		// Blocks until the reporter has finished writing its output
-		if err := <-done; err != nil {
-			_, _ = fmt.Fprintf(stdout, "JUnit reporter failed: %v: %v\n", junitOutputCmd.Args, err)
+		if err := <-done; err != nil && rErr == nil {
+			rErr = errors.Wrapf(err, "JUnit reporter failed: %v", junitOutputCmd.Args)
 		}
 	}()
 
