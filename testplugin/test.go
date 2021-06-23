@@ -107,15 +107,19 @@ func RunTestCmd(projectDir string, testArgs, tags []string, junitOutput string, 
 		return err
 	}
 
+	defer func() {
+		// Blocks until the reporter has finished writing its output
+		if err := <-done; err != nil && rErr == nil {
+			rErr = errors.Wrapf(err, "JUnit reporter failed: %v", junitOutputCmd.Args)
+		}
+	}()
+
 	if len(failedPkgs) > 0 {
 		numFailedPkgs := len(failedPkgs)
 		outputParts := append([]string{fmt.Sprintf("%d package(s) had failing tests:", numFailedPkgs)}, failedPkgs...)
 		return errors.Errorf(strings.Join(outputParts, "\n\t"))
 	}
 
-	if err := <-done; err != nil {
-		return errors.Wrapf(err, "JUnit reporter failed: %v", junitOutputCmd.Args)
-	}
 	return nil
 }
 
