@@ -1,0 +1,5 @@
+type: fix
+fix:
+  description: Update github.com/ulikunitz/xz module to v0.5.10 to fix security vulnerability.
+  links:
+  - https://github.com/palantir/godel-test-plugin/pull/111

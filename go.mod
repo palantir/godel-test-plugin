@@ -13,5 +13,6 @@ require (
 	github.com/pkg/errors v0.8.1
 	github.com/spf13/cobra v1.2.1
 	github.com/stretchr/testify v1.7.0
+	github.com/ulikunitz/xz v0.5.10 // indirect
 	gopkg.in/yaml.v2 v2.4.0
 )
