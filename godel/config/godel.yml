@@ -3,15 +3,15 @@ plugins:
     - https://github.com/{{index GroupParts 1}}/{{index GroupParts 2}}/releases/download/v{{Version}}/{{Product}}-{{Version}}-{{OS}}-{{Arch}}.tgz
   plugins:
     - locator:
-        id: com.palantir.godel-amalgomate-plugin:amalgomate-plugin:1.5.0
+        id: com.palantir.godel-amalgomate-plugin:amalgomate-plugin:1.6.0
         checksums:
-          darwin-amd64: c3f7f3e292a63922e720c926d4a5b696d092ce22c7a3bc20135c328d15586306
-          linux-amd64: 9112f1fa6ecd08f4c63dc7ffe10ffaf1cc19f274f5f58c3483ca20cf05f1c05a
+          darwin-amd64: 2191cb626d7184ba9ab69cfeffc37eeb73706d38aa67630ccfb4c8f389905270
+          linux-amd64: d228d2fb1186305ac757f83764054527a9afa4e329f24113922c6e6f02dfa8d8
     - locator:
-        id: com.palantir.godel-mod-plugin:mod-plugin:1.4.0
+        id: com.palantir.godel-mod-plugin:mod-plugin:1.5.0
         checksums:
-          darwin-amd64: 394fde518cc913ba808e0e0ecbc00da54ed88f6f71fa57fb1da1836a46b1b74b
-          linux-amd64: 110540240a42894f0c76922ee832391938e9f51cac9a0a7c7f24cfcc9f9a34fa
+          darwin-amd64: 10fd0994599ce564e1d156671417adf2a1d00c158f0777e352bde31c387f5906
+          linux-amd64: fe7ba0d2df44cfca066d5b02f3e1c666dcc112ac6fcca33575cc8bf617e0e1b8
 environment:
   GO111MODULE: "on"
   GOFLAGS: "-mod=vendor"
