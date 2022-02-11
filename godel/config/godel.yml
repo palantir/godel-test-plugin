@@ -8,10 +8,10 @@ plugins:
           darwin-amd64: 0f571fc1d0c94e15a3ca23dfaff11b0279f194a1c9a3295b7e8d0d80c53f115d
           linux-amd64: 13bfe23f2e472e80d5e704755da436ac22cb396d8fdee7d0da55f3af957f1364
     - locator:
-        id: com.palantir.godel-mod-plugin:mod-plugin:1.5.0
+        id: com.palantir.godel-mod-plugin:mod-plugin:1.6.0
         checksums:
-          darwin-amd64: 10fd0994599ce564e1d156671417adf2a1d00c158f0777e352bde31c387f5906
-          linux-amd64: fe7ba0d2df44cfca066d5b02f3e1c666dcc112ac6fcca33575cc8bf617e0e1b8
+          darwin-amd64: f0a9a94d43370b17e3c12cec8ff316e6a8708ab5f136277cd7d0207e35331c19
+          linux-amd64: b8228126945d9e8b9897d6e5b222f19c09ebd9a79d2c5d7e9fb417f6f0800d51
 environment:
   GO111MODULE: "on"
   GOFLAGS: "-mod=vendor"
