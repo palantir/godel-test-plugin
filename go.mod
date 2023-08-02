@@ -4,7 +4,7 @@ go 1.20
 
 require (
 	github.com/jstemmer/go-junit-report v0.9.1
-	github.com/palantir/godel/v2 v2.88.0
+	github.com/palantir/godel/v2 v2.89.0
 	github.com/palantir/pkg/cobracli v1.2.0
 	github.com/palantir/pkg/matcher v1.2.0
 	github.com/palantir/pkg/pkgpath v1.2.0
