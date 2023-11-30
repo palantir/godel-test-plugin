@@ -31,6 +31,7 @@ import (
 const GoJUnitReport = "gojunitreport"
 
 func RunTestCmd(projectDir string, testArgs, tags []string, junitOutput string, param TestParam, stdout io.Writer) (rErr error) {
+	fmt.Println("HI")
 	if err := param.Validate(); err != nil {
 		return err
 	}
