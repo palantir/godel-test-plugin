@@ -1,0 +1,26 @@
+./godelw verify failed after updating godel plugins and assets
+
+Command that caused error:
+./godelw verify --skip-test --skip-check
+
+Output:
+Running format...
+Running mod...
+go: downloading golang.org/x/tools v0.22.0
+go: downloading github.com/pierrec/lz4 v2.0.5+incompatible
+go: github.com/palantir/godel-test-plugin/cmd imports
+	github.com/palantir/godel/v2/framework/godellauncher tested by
+	github.com/palantir/godel/v2/framework/godellauncher.test imports
+	github.com/nmiyake/pkg/gofiles imports
+	golang.org/x/tools/go/packages: golang.org/x/tools@v0.22.0: read "https:/proxy.golang.org/@v/v0.22.0.zip": read tcp 172.26.64.45:40240->142.250.176.209:443: read: connection timed out
+go: github.com/palantir/godel-test-plugin/cmd imports
+	github.com/palantir/godel/v2/framework/godel/config imports
+	github.com/palantir/godel/v2/framework/artifactresolver imports
+	github.com/palantir/godel/v2/godelgetter tested by
+	github.com/palantir/godel/v2/godelgetter.test imports
+	github.com/mholt/archiver/v3 imports
+	github.com/pierrec/lz4: github.com/pierrec/lz4@v2.0.5+incompatible: read "https:/proxy.golang.org/@v/v2.0.5+incompatible.zip": read tcp 172.26.64.45:40240->142.250.176.209:443: read: connection timed out
+Running amalgomate...
+Running license...
+Failed tasks:
+	mod
