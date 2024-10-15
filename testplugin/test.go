@@ -207,7 +207,7 @@ func matcherForTags(tags []string, cfg TestParam) (matcher.Matcher, error) {
 // pkgPaths returns a slice that contains the relative package paths for all of the packages in the provided project
 // directory relative to the project directory excluding any of the paths that match the provided "exclude" Matcher.
 func pkgPaths(projectDir string, exclude matcher.Matcher) ([]string, error) {
-	pkgs, err := pkgpath.PackagesInDir(projectDir, exclude)
+	pkgs, err := pkgpath.PackagesInDirMatchingRootModule(projectDir, exclude)
 	if err != nil {
 		return nil, errors.Wrapf(err, "failed to list packages in %s", projectDir)
 	}
