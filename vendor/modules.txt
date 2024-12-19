@@ -70,8 +70,8 @@ github.com/nmiyake/pkg/errorstringer
 # github.com/nwaples/rardecode v1.1.0
 ## explicit
 github.com/nwaples/rardecode
-# github.com/palantir/godel/v2 v2.123.0
-## explicit; go 1.21.0
+# github.com/palantir/godel/v2 v2.124.0
+## explicit; go 1.23.0
 github.com/palantir/godel/v2/framework/artifactresolver
 github.com/palantir/godel/v2/framework/builtintasks
 github.com/palantir/godel/v2/framework/builtintasks/githooks
