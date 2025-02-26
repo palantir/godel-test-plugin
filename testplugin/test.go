@@ -117,7 +117,7 @@ func RunTestCmd(projectDir string, testArgs, tags []string, junitOutput string, 
 	if len(failedPkgs) > 0 {
 		numFailedPkgs := len(failedPkgs)
 		outputParts := append([]string{fmt.Sprintf("%d package(s) had failing tests:", numFailedPkgs)}, failedPkgs...)
-		return errors.Errorf(strings.Join(outputParts, "\n\t"))
+		return errors.Errorf("%s", strings.Join(outputParts, "\n\t"))
 	}
 
 	return nil
