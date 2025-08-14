@@ -27,7 +27,7 @@ require (
 	github.com/klauspost/pgzip v1.2.5 // indirect
 	github.com/kr/pretty v0.2.0 // indirect
 	github.com/mattn/go-colorable v0.1.12 // indirect
-	github.com/mattn/go-isatty v0.0.14 // indirect
+	github.com/mattn/go-isatty v0.0.20 // indirect
 	github.com/mattn/go-runewidth v0.0.6 // indirect
 	github.com/mholt/archiver/v3 v3.5.1 // indirect
 	github.com/nmiyake/pkg/dirs v1.1.0 // indirect
