@@ -20,8 +20,8 @@ github.com/dsnet/compress/bzip2/internal/sais
 github.com/dsnet/compress/internal
 github.com/dsnet/compress/internal/errors
 github.com/dsnet/compress/internal/prefix
-# github.com/fatih/color v1.13.0
-## explicit; go 1.13
+# github.com/fatih/color v1.18.0
+## explicit; go 1.17
 github.com/fatih/color
 # github.com/golang/snappy v0.0.3
 ## explicit
