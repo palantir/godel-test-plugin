@@ -4,7 +4,7 @@ go 1.24.0
 
 require (
 	github.com/jstemmer/go-junit-report v0.9.1
-	github.com/palantir/godel/v2 v2.134.0
+	github.com/palantir/godel/v2 v2.135.0
 	github.com/palantir/pkg/cobracli v1.2.0
 	github.com/palantir/pkg/matcher v1.2.0
 	github.com/palantir/pkg/pkgpath v1.3.0
@@ -17,7 +17,7 @@ require (
 require (
 	github.com/VividCortex/ewma v1.2.0 // indirect
 	github.com/andybalholm/brotli v1.2.0 // indirect
-	github.com/cheggaaa/pb/v3 v3.0.2 // indirect
+	github.com/cheggaaa/pb/v3 v3.1.7 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/dsnet/compress v0.0.2-0.20210315054119-f66993602bf5 // indirect
 	github.com/fatih/color v1.18.0 // indirect
@@ -36,7 +36,7 @@ require (
 	github.com/palantir/pkg/specdir v1.2.0 // indirect
 	github.com/pierrec/lz4/v4 v4.1.22 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
-	github.com/rivo/uniseg v0.2.0 // indirect
+	github.com/rivo/uniseg v0.4.7 // indirect
 	github.com/rogpeppe/go-internal v1.14.1 // indirect
 	github.com/spf13/pflag v1.0.7 // indirect
 	github.com/ulikunitz/xz v0.5.12 // indirect
