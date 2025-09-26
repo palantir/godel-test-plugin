@@ -18,19 +18,12 @@ import (
 	"os"
 
 	"github.com/palantir/godel-test-plugin/cmd"
-	amalgomated "github.com/palantir/godel-test-plugin/gojunit/generated_src"
-	"github.com/palantir/godel-test-plugin/testplugin"
 	"github.com/palantir/godel/v2/framework/pluginapi/v2/pluginapi"
 	"github.com/palantir/pkg/cobracli"
 )
 
 func main() {
 	if ok := pluginapi.InfoCmd(os.Args, os.Stdout, cmd.PluginInfo); ok {
-		return
-	}
-	if len(os.Args) > 1 && os.Args[1] == "__"+testplugin.GoJUnitReport {
-		os.Args = append([]string{os.Args[0]}, os.Args[2:]...)
-		amalgomated.Instance().Run(testplugin.GoJUnitReport)
 		return
 	}
 	os.Exit(cobracli.ExecuteWithDebugVarAndDefaultParams(cmd.RootCmd, &cmd.DebugFlagVal))

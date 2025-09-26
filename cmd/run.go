@@ -15,7 +15,6 @@
 package cmd
 
 import (
-	"io/ioutil"
 	"os"
 
 	"github.com/palantir/godel-test-plugin/testplugin"
@@ -64,7 +63,7 @@ func testParamFromFlags(testConfigFile, godelConfigFile string) (testplugin.Test
 }
 
 func readTestConfigFromFile(cfg string) (config.Test, error) {
-	bytes, err := ioutil.ReadFile(cfg)
+	bytes, err := os.ReadFile(cfg)
 	if os.IsNotExist(err) {
 		return config.Test{}, nil
 	}

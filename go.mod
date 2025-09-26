@@ -3,7 +3,7 @@ module github.com/palantir/godel-test-plugin
 go 1.25.0
 
 require (
-	github.com/jstemmer/go-junit-report v0.9.1
+	github.com/jstemmer/go-junit-report/v2 v2.1.0
 	github.com/palantir/godel/v2 v2.142.0
 	github.com/palantir/pkg/cobracli v1.3.0
 	github.com/palantir/pkg/matcher v1.3.0
