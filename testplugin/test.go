@@ -17,8 +17,6 @@ package testplugin
 import (
 	"fmt"
 	"io"
-	"io/ioutil"
-	"os"
 	"os/exec"
 	"sort"
 	"strings"
@@ -59,60 +57,23 @@ func RunTestCmd(projectDir string, testArgs, tags []string, junitOutput string, 
 		return err
 	}
 
-	var junitOutputCmd *exec.Cmd
-	rawOutputWriter := ioutil.Discard
-	done := make(chan error)
+	rawOutputWriter := io.Discard
 
 	if junitOutput != "" {
-		pathToSelf, err := os.Executable()
+		junitInputPipeWriter, closeJUnitReporter, err := startJUnitReporter(junitOutput)
 		if err != nil {
-			return errors.Wrapf(err, "failed to determine path for current executable")
+			return err
 		}
-		junitOutputCmd = exec.Command(pathToSelf, "__"+GoJUnitReport)
-
-		junitOutputFile, err := os.Create(junitOutput)
-		if err != nil {
-			return errors.Wrapf(err, "failed to create JUnit output file")
-		}
-		defer func() {
-			if err := junitOutputFile.Close(); err != nil && rErr == nil {
-				rErr = errors.Wrapf(err, "failed to close output file")
-			}
-		}()
-		junitOutputCmd.Stdout = junitOutputFile
-		junitOutputCmd.Stderr = junitOutputFile
-
-		wc, err := junitOutputCmd.StdinPipe()
-		if err != nil {
-			return errors.Wrapf(err, "failed to create stdin pipe")
-		}
-		rawOutputWriter = wc
-
-		go func() {
-			done <- junitOutputCmd.Run()
-		}()
-	} else {
-		close(done)
+		defer closeJUnitReporter()
+		rawOutputWriter = junitInputPipeWriter
 	}
 
 	failedPkgs, err := executeTestCmd(cmd, stdout, rawOutputWriter, maxPkgLen)
-	if closer, ok := rawOutputWriter.(io.Closer); ok {
-		if err := closer.Close(); err != nil {
-			return errors.Wrapf(err, "failed to close raw output writer")
-		}
-	}
 
 	if err != nil && err.Error() != "exit status 1" {
 		// only re-throw if error is not "exit status 1", since those errors are generally recoverable
 		return err
 	}
-
-	defer func() {
-		// Blocks until the reporter has finished writing its output
-		if err := <-done; err != nil && rErr == nil {
-			rErr = errors.Wrapf(err, "JUnit reporter failed: %v", junitOutputCmd.Args)
-		}
-	}()
 
 	if len(failedPkgs) > 0 {
 		numFailedPkgs := len(failedPkgs)
