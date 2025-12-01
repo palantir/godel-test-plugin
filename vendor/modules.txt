@@ -43,7 +43,7 @@ github.com/jstemmer/go-junit-report/v2/junit
 github.com/jstemmer/go-junit-report/v2/parser/gotest
 github.com/jstemmer/go-junit-report/v2/parser/gotest/internal/collector
 github.com/jstemmer/go-junit-report/v2/parser/gotest/internal/reader
-# github.com/klauspost/compress v1.18.1
+# github.com/klauspost/compress v1.18.2
 ## explicit; go 1.23
 github.com/klauspost/compress
 github.com/klauspost/compress/flate
