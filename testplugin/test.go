@@ -28,15 +28,24 @@ import (
 
 const GoJUnitReport = "gojunitreport"
 
-func RunTestCmd(projectDir string, testArgs, tags []string, junitOutput string, param TestParam, stdout io.Writer) (rErr error) {
+func RunTestCmd(projectDir string, testArgs, tags []string, junitOutput, partition string, param TestParam, stdout io.Writer) (rErr error) {
 	if err := param.Validate(); err != nil {
 		return err
+	}
+	p, err := ParsePartition(partition)
+	if err != nil {
+		return errors.Wrap(err, "failed to parse partition flag")
 	}
 	pkgs, err := PkgsForTags(projectDir, tags, param)
 	if err != nil {
 		return err
 	}
+	pkgs = p.Apply(pkgs)
 	if len(pkgs) == 0 {
+		if p != nil {
+			_, _ = fmt.Fprintf(stdout, "No packages in %s\n", p.String())
+			return nil
+		}
 		return errors.Errorf("no packages to test")
 	}
 
