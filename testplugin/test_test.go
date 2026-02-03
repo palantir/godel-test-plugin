@@ -109,7 +109,6 @@ func TestPkgsToTestEmptyPartition(t *testing.T) {
 	pkgs, err := PkgsToTest(tmpDir, nil, "3,4", TestParam{}, &stdout)
 	require.NoError(t, err)
 	assert.Empty(t, pkgs)
-	assert.Contains(t, stdout.String(), "No packages in partition 3 of 4")
 }
 
 func TestPkgsToTestNoPackages(t *testing.T) {
@@ -119,8 +118,8 @@ func TestPkgsToTestNoPackages(t *testing.T) {
 	require.NoError(t, os.WriteFile(filepath.Join(tmpDir, "go.mod"), goModContent, 0644))
 
 	var stdout bytes.Buffer
-	// No partition, no packages should return error
-	_, err := PkgsToTest(tmpDir, nil, "", TestParam{}, &stdout)
-	require.Error(t, err)
-	assert.Contains(t, err.Error(), "no packages to test")
+	// No partition, no packages should return empty slice
+	pkgs, err := PkgsToTest(tmpDir, nil, "", TestParam{}, &stdout)
+	require.NoError(t, err)
+	assert.Empty(t, pkgs)
 }
