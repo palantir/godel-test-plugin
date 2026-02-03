@@ -98,9 +98,6 @@ func PkgsToTest(projectDir string, tags []string, partition string, param TestPa
 	if p != nil {
 		pkgs = p.Apply(pkgs)
 	}
-	if len(pkgs) == 0 {
-		return nil, errors.Errorf("no packages to test")
-	}
 	return pkgs, nil
 }
 
