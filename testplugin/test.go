@@ -37,7 +37,7 @@ func RunTestCmd(projectDir string, testArgs, tags []string, junitOutput, partiti
 		return err
 	}
 	if len(pkgs) == 0 {
-		return nil
+		return errors.Errorf("no packages to test")
 	}
 
 	args := []string{
