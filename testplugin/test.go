@@ -32,21 +32,12 @@ func RunTestCmd(projectDir string, testArgs, tags []string, junitOutput, partiti
 	if err := param.Validate(); err != nil {
 		return err
 	}
-	p, err := ParsePartition(partition)
-	if err != nil {
-		return errors.Wrap(err, "failed to parse partition flag")
-	}
-	pkgs, err := PkgsForTags(projectDir, tags, param)
+	pkgs, err := PkgsToTest(projectDir, tags, partition, param, stdout)
 	if err != nil {
 		return err
 	}
-	pkgs = p.Apply(pkgs)
 	if len(pkgs) == 0 {
-		if p != nil {
-			_, _ = fmt.Fprintf(stdout, "No packages in %s\n", p.String())
-			return nil
-		}
-		return errors.Errorf("no packages to test")
+		return nil
 	}
 
 	args := []string{
@@ -91,6 +82,26 @@ func RunTestCmd(projectDir string, testArgs, tags []string, junitOutput, partiti
 	}
 
 	return nil
+}
+
+// PkgsToTest returns the list of packages to test based on tags, exclusions, and partitioning.
+// Returns an error if partition parsing fails or no packages are found (unless partitioning results in empty set).
+func PkgsToTest(projectDir string, tags []string, partition string, param TestParam, stdout io.Writer) ([]string, error) {
+	p, err := ParsePartition(partition)
+	if err != nil {
+		return nil, errors.Wrap(err, "failed to parse partition flag")
+	}
+	pkgs, err := PkgsForTags(projectDir, tags, param)
+	if err != nil {
+		return nil, err
+	}
+	if p != nil {
+		pkgs = p.Apply(pkgs)
+	}
+	if len(pkgs) == 0 {
+		return nil, errors.Errorf("no packages to test")
+	}
+	return pkgs, nil
 }
 
 func PkgsForTags(projectDir string, tags []string, param TestParam) ([]string, error) {
