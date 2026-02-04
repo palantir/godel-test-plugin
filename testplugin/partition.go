@@ -66,9 +66,7 @@ func (p *Partition) Apply(pkgs []string) []string {
 		return pkgs
 	}
 	// Sort for deterministic partitioning
-	sorted := make([]string, len(pkgs))
-	copy(sorted, pkgs)
-	sort.Strings(sorted)
+    sorted := slices.Sorted(slices.Values(pkgs))
 
 	// Calculate partition boundaries
 	totalPkgs := len(sorted)
