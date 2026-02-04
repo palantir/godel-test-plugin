@@ -111,6 +111,12 @@ func TestPartitionApply(t *testing.T) {
 			want:      []string{"c", "a", "b"},
 		},
 		{
+			name:      "partition 0 of 1 returns all packages sorted",
+			partition: &Partition{Index: 0, Total: 1},
+			pkgs:      []string{"c", "a", "b"},
+			want:      []string{"a", "b", "c"},
+		},
+		{
 			name:      "empty packages returns empty",
 			partition: &Partition{Index: 0, Total: 2},
 			pkgs:      []string{},
