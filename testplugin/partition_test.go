@@ -144,7 +144,7 @@ func TestPartitionApply(t *testing.T) {
 			name:      "3 packages, partition 3 of 4 (empty)",
 			partition: &Partition{Index: 3, Total: 4},
 			pkgs:      []string{"c", "b", "a"},
-			want:      []string{},
+			want:      nil,
 		},
 		{
 			name:      "10 packages, partition 0 of 3",
