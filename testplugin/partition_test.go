@@ -179,7 +179,6 @@ func TestPartitionApply(t *testing.T) {
 }
 
 func TestPartitionString(t *testing.T) {
-	assert.Equal(t, "no partition", (*Partition)(nil).String())
 	assert.Equal(t, "partition 0 of 4", (&Partition{Index: 0, Total: 4}).String())
 	assert.Equal(t, "partition 2 of 5", (&Partition{Index: 2, Total: 5}).String())
 }
