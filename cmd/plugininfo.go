@@ -49,6 +49,11 @@ var (
 						"specify tags that should be used for tests (only used if 'test' task is run)",
 						godellauncher.StringFlag,
 					),
+					pluginapi.NewVerifyFlag(
+						"partition",
+						"partition packages for parallel testing (format: X,N where X is 0-indexed partition and N is total partitions)",
+						godellauncher.StringFlag,
+					),
 				),
 				pluginapi.VerifyOptionsOrdering(intPtr(verifyorder.Test)),
 			),

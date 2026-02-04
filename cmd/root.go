@@ -27,6 +27,7 @@ var (
 	testConfigFileFlagVal  string
 	junitOutputFlagVal     string
 	tagsFlagVal            []string
+	partitionFlagVal       string
 )
 
 var RootCmd = &cobra.Command{

@@ -33,13 +33,18 @@ var runCmd = &cobra.Command{
 		if err != nil {
 			return err
 		}
-		return testplugin.RunTestCmd(projectDirFlagVal, args, tagsFlagVal, junitOutputFlagVal, param, cmd.OutOrStdout())
+		partition, err := testplugin.ParsePartition(partitionFlagVal)
+		if err != nil {
+			return err
+		}
+		return testplugin.RunTestCmd(projectDirFlagVal, args, tagsFlagVal, junitOutputFlagVal, partition, param, cmd.OutOrStdout())
 	},
 }
 
 func init() {
 	runCmd.Flags().StringVar(&junitOutputFlagVal, "junit-output", "", "file to which JUnit output is written")
 	runCmd.Flags().StringSliceVar(&tagsFlagVal, "tags", nil, "run tests that are part of the provided tags")
+	runCmd.Flags().StringVar(&partitionFlagVal, "partition", "", "partition packages for parallel testing (format: X,N where X is 0-indexed partition and N is total partitions)")
 	RootCmd.AddCommand(runCmd)
 }
 
