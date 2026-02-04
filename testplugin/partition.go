@@ -16,7 +16,7 @@ package testplugin
 
 import (
 	"fmt"
-	"sort"
+	"slices"
 	"strconv"
 	"strings"
 
@@ -66,7 +66,7 @@ func (p *Partition) Apply(pkgs []string) []string {
 		return pkgs
 	}
 	// Sort for deterministic partitioning
-    sorted := slices.Sorted(slices.Values(pkgs))
+	sorted := slices.Sorted(slices.Values(pkgs))
 
 	// Calculate partition boundaries
 	totalPkgs := len(sorted)
@@ -101,8 +101,5 @@ func (p *Partition) Apply(pkgs []string) []string {
 
 // String returns a human-readable string representation of the partition.
 func (p Partition) String() string {
-	if p == nil {
-		return "no partition"
-	}
 	return fmt.Sprintf("partition %d of %d", p.Index, p.Total)
 }
