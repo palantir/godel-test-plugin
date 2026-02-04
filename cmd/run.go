@@ -33,7 +33,11 @@ var runCmd = &cobra.Command{
 		if err != nil {
 			return err
 		}
-		return testplugin.RunTestCmd(projectDirFlagVal, args, tagsFlagVal, junitOutputFlagVal, partitionFlagVal, param, cmd.OutOrStdout())
+		partition, err := testplugin.ParsePartition(partitionFlagVal)
+		if err != nil {
+			return err
+		}
+		return testplugin.RunTestCmd(projectDirFlagVal, args, tagsFlagVal, junitOutputFlagVal, partition, param, cmd.OutOrStdout())
 	},
 }
 

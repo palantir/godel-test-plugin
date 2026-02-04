@@ -28,7 +28,7 @@ import (
 
 const GoJUnitReport = "gojunitreport"
 
-func RunTestCmd(projectDir string, testArgs, tags []string, junitOutput, partition string, param TestParam, stdout io.Writer) (rErr error) {
+func RunTestCmd(projectDir string, testArgs, tags []string, junitOutput string, partition *Partition, param TestParam, stdout io.Writer) (rErr error) {
 	if err := param.Validate(); err != nil {
 		return err
 	}
@@ -86,17 +86,13 @@ func RunTestCmd(projectDir string, testArgs, tags []string, junitOutput, partiti
 
 // PkgsToTest returns the list of packages to test based on tags, exclusions, and partitioning.
 // Returns an error if partition parsing fails or no packages are found (unless partitioning results in empty set).
-func PkgsToTest(projectDir string, tags []string, partition string, param TestParam, stdout io.Writer) ([]string, error) {
-	p, err := ParsePartition(partition)
-	if err != nil {
-		return nil, errors.Wrap(err, "failed to parse partition flag")
-	}
+func PkgsToTest(projectDir string, tags []string, partition *Partition, param TestParam, stdout io.Writer) ([]string, error) {
 	pkgs, err := PkgsForTags(projectDir, tags, param)
 	if err != nil {
 		return nil, err
 	}
-	if p != nil {
-		pkgs = p.Apply(pkgs)
+	if partition != nil {
+		pkgs = partition.Apply(pkgs)
 	}
 	return pkgs, nil
 }
