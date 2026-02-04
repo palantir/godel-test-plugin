@@ -100,7 +100,7 @@ func (p *Partition) Apply(pkgs []string) []string {
 }
 
 // String returns a human-readable string representation of the partition.
-func (p *Partition) String() string {
+func (p Partition) String() string {
 	if p == nil {
 		return "no partition"
 	}
