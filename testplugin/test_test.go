@@ -38,44 +38,34 @@ func TestPkgsToTest(t *testing.T) {
 
 	for _, tc := range []struct {
 		name      string
-		partition string
+		partition *Partition
 		wantPkgs  []string
 		wantErr   string
 	}{
 		{
 			name:      "no partition returns all packages",
-			partition: "",
+			partition: nil,
 			wantPkgs:  []string{"./a", "./b", "./c", "./d"},
 		},
 		{
 			name:      "partition 0,2 returns first half",
-			partition: "0,2",
+			partition: &Partition{Index: 0, Total: 2},
 			wantPkgs:  []string{"./a", "./b"},
 		},
 		{
 			name:      "partition 1,2 returns second half",
-			partition: "1,2",
+			partition: &Partition{Index: 1, Total: 2},
 			wantPkgs:  []string{"./c", "./d"},
 		},
 		{
 			name:      "partition 0,4 returns first package",
-			partition: "0,4",
+			partition: &Partition{Index: 0, Total: 4},
 			wantPkgs:  []string{"./a"},
 		},
 		{
 			name:      "partition 3,4 returns last package",
-			partition: "3,4",
+			partition: &Partition{Index: 3, Total: 4},
 			wantPkgs:  []string{"./d"},
-		},
-		{
-			name:      "invalid partition format returns error",
-			partition: "invalid",
-			wantErr:   "failed to parse partition flag",
-		},
-		{
-			name:      "partition out of bounds returns error",
-			partition: "5,4",
-			wantErr:   "failed to parse partition flag",
 		},
 	} {
 		t.Run(tc.name, func(t *testing.T) {
@@ -106,7 +96,7 @@ func TestPkgsToTestEmptyPartition(t *testing.T) {
 
 	var stdout bytes.Buffer
 	// Partition 3 of 4 with only 2 packages should return empty slice (not error)
-	pkgs, err := PkgsToTest(tmpDir, nil, "3,4", TestParam{}, &stdout)
+	pkgs, err := PkgsToTest(tmpDir, nil, &Partition{Index: 3, Total: 4}, TestParam{}, &stdout)
 	require.NoError(t, err)
 	assert.Empty(t, pkgs)
 }
@@ -119,7 +109,7 @@ func TestPkgsToTestNoPackages(t *testing.T) {
 
 	var stdout bytes.Buffer
 	// No partition, no packages should return empty slice
-	pkgs, err := PkgsToTest(tmpDir, nil, "", TestParam{}, &stdout)
+	pkgs, err := PkgsToTest(tmpDir, nil, nil, TestParam{}, &stdout)
 	require.NoError(t, err)
 	assert.Empty(t, pkgs)
 }
