@@ -93,7 +93,7 @@ func (p *Partition) Apply(pkgs []string) []string {
 
 	end := start + size
 	if start >= totalPkgs {
-		return []string{}
+		return nil
 	}
 	if end > totalPkgs {
 		end = totalPkgs
