@@ -34,8 +34,8 @@ func longestPkgNameLen(pkgPaths []string, projectDir string) (int, error) {
 	}
 
 	longestPkgLen := 0
-	listedPkgs := strings.Split(string(listedPkgsBytes), "\n")
-	for _, pkgName := range listedPkgs {
+	listedPkgs := strings.SplitSeq(string(listedPkgsBytes), "\n")
+	for pkgName := range listedPkgs {
 		if len(pkgName) > longestPkgLen {
 			longestPkgLen = len(pkgName)
 		}
@@ -133,13 +133,11 @@ func (w *multiWriter) Write(p []byte) (int, error) {
 // of maxPkgLen.
 func alignLine(fields []string, maxPkgLen int) string {
 	currPkgName := fields[1]
-	repeat := maxPkgLen - len(currPkgName)
-	if repeat < 0 {
+	repeat := max(maxPkgLen-len(currPkgName),
 		// this should not occur under normal circumstances. However, it appears that it is possible if tests
 		// create test packages in the directory structure while tests are already running. If such a case is
 		// encountered, having output that isn't aligned optimally is better than crashing, so set repeat to 0.
-		repeat = 0
-	}
+		0)
 	fields[1] = currPkgName + strings.Repeat(" ", repeat)
 	return strings.Join(fields, "\t")
 }
