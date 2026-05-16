@@ -55,7 +55,7 @@ var (
 						godellauncher.StringFlag,
 					),
 				),
-				pluginapi.VerifyOptionsOrdering(intPtr(verifyorder.Test)),
+				pluginapi.VerifyOptionsOrdering(new(verifyorder.Test)),
 			),
 		),
 		pluginapi.PluginInfoTaskInfo(
