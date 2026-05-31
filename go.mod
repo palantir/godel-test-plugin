@@ -2,6 +2,8 @@ module github.com/palantir/godel-test-plugin
 
 go 1.26.0
 
+toolchain go1.26.3
+
 require (
 	github.com/jstemmer/go-junit-report/v2 v2.1.0
 	github.com/palantir/godel/v2 v2.155.0
