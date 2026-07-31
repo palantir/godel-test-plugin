@@ -55,7 +55,7 @@ var (
 						godellauncher.StringFlag,
 					),
 				),
-				pluginapi.VerifyOptionsOrdering(intPtr(verifyorder.Test)),
+				pluginapi.VerifyOptionsOrdering(new(verifyorder.Test)),
 			),
 		),
 		pluginapi.PluginInfoTaskInfo(
@@ -69,8 +69,3 @@ var (
 		),
 	)
 )
-
-//go:fix inline
-func intPtr(val int) *int {
-	return new(val)
-}
