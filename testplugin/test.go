@@ -15,6 +15,7 @@
 package testplugin
 
 import (
+	goerrors "errors"
 	"fmt"
 	"io"
 	"os/exec"
@@ -70,15 +71,21 @@ func RunTestCmd(projectDir string, testArgs, tags []string, junitOutput string, 
 
 	failedPkgs, err := executeTestCmd(cmd, stdout, rawOutputWriter, maxPkgLen)
 
-	if err != nil && err.Error() != "exit status 1" {
-		// only re-throw if error is not "exit status 1", since those errors are generally recoverable
-		return err
-	}
-
 	if len(failedPkgs) > 0 {
 		numFailedPkgs := len(failedPkgs)
 		outputParts := append([]string{fmt.Sprintf("%d package(s) had failing tests:", numFailedPkgs)}, failedPkgs...)
 		return errors.Errorf("%s", strings.Join(outputParts, "\n\t"))
+	}
+
+	// the exit status of "go test" is the authoritative signal for whether the tests succeeded: the
+	// packages parsed out of the command's output are only used to provide a more useful error
+	// message. A non-zero exit status with no parsed failures occurs for cases such as packages that
+	// fail to compile (where the output does not contain a parseable "FAIL" summary line).
+	if err != nil {
+		if exitErr, ok := goerrors.AsType[*exec.ExitError](err); ok {
+			return errors.Wrapf(exitErr, `"go test" failed and no failing packages were detected in its output`)
+		}
+		return err
 	}
 
 	return nil
