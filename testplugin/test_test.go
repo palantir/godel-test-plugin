@@ -24,6 +24,21 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
+func TestRunTestCmdReturnsErrorForBuildFailureWithoutParsedPackage(t *testing.T) {
+	tmpDir := t.TempDir()
+	require.NoError(t, os.WriteFile(filepath.Join(tmpDir, "go.mod"), []byte("module testmod\n\ngo 1.21\n"), 0644))
+
+	pkgDir := filepath.Join(tmpDir, "pkgbad")
+	require.NoError(t, os.MkdirAll(pkgDir, 0755))
+	require.NoError(t, os.WriteFile(filepath.Join(pkgDir, "pkgbad.go"), []byte("package pkgbad\n\nvar _ = undefined\n"), 0644))
+
+	var stdout bytes.Buffer
+	err := RunTestCmd(tmpDir, nil, nil, "", nil, TestParam{}, &stdout)
+
+	require.EqualError(t, err, `"go test" failed and no failing packages were detected in its output: exit status 1`)
+	assert.Contains(t, stdout.String(), "FAIL\ttestmod/pkgbad [build failed]")
+}
+
 func TestPkgsToTest(t *testing.T) {
 	// Create a temp directory with some Go packages for testing
 	tmpDir := t.TempDir()
