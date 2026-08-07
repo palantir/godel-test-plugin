@@ -16,6 +16,7 @@ package testplugin
 
 import (
 	"bufio"
+	"bytes"
 	"io"
 	"os/exec"
 	"regexp"
@@ -74,6 +75,10 @@ func executeTestCmd(execCmd *exec.Cmd, stdout, rawOutputWriter io.Writer, longes
 
 	// run command (which will print its Stdout and Stderr to the Stdout of current process) and return output
 	err := execCmd.Run()
+	// process any trailing output that was not terminated by a newline
+	if flushErr := multiWriter.Flush(); flushErr != nil && err == nil {
+		err = flushErr
+	}
 	return multiWriter.failedPkgs, err
 }
 
@@ -82,6 +87,9 @@ type multiWriter struct {
 	rawOutputWriter   io.Writer
 	failedPkgs        []string
 	longestPkgNameLen int
+	// partial line from the end of the previous Write call. The writes performed by the command are
+	// not guaranteed to be line-aligned, so a line may be split across multiple Write calls.
+	pendingLine []byte
 }
 
 var setupFailedRegexp = regexp.MustCompile(`(^FAIL\t.+) (\[setup failed\]$)`)
@@ -93,7 +101,43 @@ func (w *multiWriter) Write(p []byte) (int, error) {
 		return n, err
 	}
 
-	lines := strings.Split(string(p), "\n")
+	// only process complete lines: buffer any trailing partial line and prepend it to the content of
+	// the next Write call so that a line that is split across Write calls is still processed as a
+	// single line.
+	buf := append(w.pendingLine, p...)
+	lastNewlineIdx := bytes.LastIndexByte(buf, '\n')
+	if lastNewlineIdx == -1 {
+		// no complete line is available: buffer all content and wait for more
+		w.pendingLine = buf
+		return n, err
+	}
+	// copy the remainder because "p" must not be retained after Write returns
+	w.pendingLine = append([]byte(nil), buf[lastNewlineIdx+1:]...)
+
+	if _, err := w.consoleWriter.Write([]byte(w.processLines(string(buf[:lastNewlineIdx+1])))); err != nil {
+		return n, err
+	}
+
+	// n and err are from the unaltered write to the rawOutputWriter
+	return n, err
+}
+
+// Flush processes and writes any buffered content that was not terminated by a newline. It must be
+// called after the command that writes to this writer has completed.
+func (w *multiWriter) Flush() error {
+	if len(w.pendingLine) == 0 {
+		return nil
+	}
+	pendingLine := string(w.pendingLine)
+	w.pendingLine = nil
+	_, err := w.consoleWriter.Write([]byte(w.processLines(pendingLine)))
+	return err
+}
+
+// processLines aligns the package summary lines in the provided content and records the packages
+// that had failures in "failedPkgs". Returns the content with the summary lines aligned.
+func (w *multiWriter) processLines(content string) string {
+	lines := strings.Split(content, "\n")
 	for i, currLine := range lines {
 		// test output for valid case always starts with "Ok" or "FAIL"
 		if strings.HasPrefix(currLine, "ok") || strings.HasPrefix(currLine, "FAIL") || strings.HasPrefix(currLine, "?") {
@@ -118,13 +162,7 @@ func (w *multiWriter) Write(p []byte) (int, error) {
 		}
 	}
 
-	// write formatted version to console writer
-	if n, err := w.consoleWriter.Write([]byte(strings.Join(lines, "\n"))); err != nil {
-		return n, err
-	}
-
-	// n and err are from the unaltered write to the rawOutputWriter
-	return n, err
+	return strings.Join(lines, "\n")
 }
 
 // alignLine returns a string where the length of the second field (fields[1]) is padded with spaces to make its length
