@@ -16,6 +16,7 @@ jobs:
       #####################
       # START Go dist setup
       #####################
+      - run: echo "GOTOOLCHAIN=local" >> $GITHUB_ENV
       - id: set-gopath
         run: |
           echo "GOPATH=$(go env GOPATH)" >> "$GITHUB_OUTPUT"
