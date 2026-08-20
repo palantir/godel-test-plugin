@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__goland__list_directory_tree",
+      "mcp__goland__search_text",
+      "Bash(cat /Volumes/git/go/src/github.palantir.build/deployability/json-schema-generator-go/go.work)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
