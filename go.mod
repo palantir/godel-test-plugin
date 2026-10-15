@@ -6,7 +6,7 @@ toolchain go1.27.2
 
 require (
 	github.com/jstemmer/go-junit-report/v2 v2.1.0
-	github.com/palantir/godel/v2 v2.191.0
+	github.com/palantir/godel/v2 v2.192.0
 	github.com/palantir/pkg/cobracli v1.4.0
 	github.com/palantir/pkg/matcher v1.3.0
 	github.com/palantir/pkg/pkgpath v1.4.0
