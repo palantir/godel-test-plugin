@@ -6,7 +6,7 @@ toolchain go1.27.3
 
 require (
 	github.com/jstemmer/go-junit-report/v2 v2.1.0
-	github.com/palantir/godel/v2 v2.203.0
+	github.com/palantir/godel/v2 v2.204.0
 	github.com/palantir/pkg/cobracli v1.4.0
 	github.com/palantir/pkg/matcher v1.3.0
 	github.com/palantir/pkg/pkgpath v1.4.0
@@ -35,6 +35,7 @@ require (
 	github.com/nmiyake/pkg/errorstringer v1.1.0 // indirect
 	github.com/nwaples/rardecode v1.1.3 // indirect
 	github.com/palantir/pkg v1.2.0 // indirect
+	github.com/palantir/pkg/gotoolchain v0.1.0 // indirect
 	github.com/palantir/pkg/specdir v1.4.0 // indirect
 	github.com/palantir/witchcraft-go-error v1.51.0 // indirect
 	github.com/palantir/witchcraft-go-params v1.50.0 // indirect
